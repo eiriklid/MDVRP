@@ -5,3 +5,4 @@ class Depot:
         self.y = y
         self.D = D  #maximum duration of a route
         self.Q = Q  #allowed maximum load of a vehicle (same for all the vehicles assigned to all depots)
+        self.customer_list = [] #dict for vehicle instead?
