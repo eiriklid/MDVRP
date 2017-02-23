@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f647d84-2478-4aff-a080-5446f28eb4e0" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/EvoPop.py" afterPath="$PROJECT_DIR$/Solution.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plot.fig" afterPath="$PROJECT_DIR$/plot.fig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Depot.py" afterPath="$PROJECT_DIR$/Depot.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/matlab_scripts.py" afterPath="$PROJECT_DIR$/matlab_scripts.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -363,7 +358,14 @@
       <option name="project" value="LOCAL" />
       <updated>1487583026763</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Representation and visualisation done">
+      <created>1487871306143</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1487871306143</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -414,7 +416,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Matlab visualization done" />
     <MESSAGE value="One vehicle traveling salesman implemented&#10;Evolutionary population class created, need better name" />
-    <option name="LAST_COMMIT_MESSAGE" value="One vehicle traveling salesman implemented&#10;Evolutionary population class created, need better name" />
+    <MESSAGE value="Representation and visualisation done" />
+    <option name="LAST_COMMIT_MESSAGE" value="Representation and visualisation done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
