@@ -1,6 +1,7 @@
 import random
+import matlab_scripts
 
-class EvoPop:
+class Solution: #should be called Solution
 
     def __init__(self,customers,depots,m):
         #check if hard/shallow copy
@@ -9,11 +10,11 @@ class EvoPop:
         #set a feasible grouping of customers
         while True:
             feasible =  True
-            customer_depot = [random.randrange(len(depots)) for i in range(len(customers))]
+            customer_depot_group = [random.randrange(len(depots)) for i in range(len(customers))]
+            #Set vehicle accordingly, each customer has a depot. Should also have a vehicle.
 
             for i,depot in enumerate(depots):
-
-                depot.customer_list= [customers[j] for j in range(len(customer_depot)) if customer_depot[j] == i ]
+                depot.customer_list= [customers[j] for j in range(len(customer_depot_group)) if customer_depot_group[j] == i ]
                 demand = [c.q for c in depot.customer_list]
 
                 if(sum(demand) > m*depot.Q):
@@ -26,13 +27,20 @@ class EvoPop:
             else:
                 print "New try!"
 
+        for depot in self.depots:
+            depot.init_route()
 
+    #Multi Vehicle Traveling Salesman for comparison, should be DELETED
     def MVTS(self):
         routes = []
         for depot in self.depots:
             routes.append(optimized_travelling_salesman(depot.customer_list,depot))
 
         return routes
+
+    def plot_sol(self,eng):
+        for depot in self.depots:
+            matlab_scripts.plot_routes(eng,depot)
 
 
 

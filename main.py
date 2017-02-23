@@ -3,7 +3,7 @@ eng = matlab.engine.start_matlab("-desktop")
 
 import Customer
 import Depot
-import EvoPop
+import Solution
 import matlab_scripts as mat
 
 
@@ -39,11 +39,10 @@ for i in range(t):
     y = int(info[2])
     D = depots[i][0]
     Q = depots[i][1]
-    depots[i]= Depot.Depot(x,y,D,Q)
+    depots[i]= Depot.Depot(x,y,D,Q,m)
 
-pop1 = EvoPop.EvoPop(customers,depots,m)
+sol_1 = Solution.Solution(customers, depots, m)
 
-routes = pop1.MVTS()
 
 
 fig = mat.make_fig(eng)
@@ -51,10 +50,8 @@ fig = mat.make_fig(eng)
 mat.plot_depot(eng,depots)
 mat.plot_customers(eng,customers)
 
-color_list = ['b','r','g','c','m','y','k']
-for j,c_list in enumerate(routes):
-    for i in range(len(c_list)-1):
-        mat.draw_line(eng,c_list[i].x,c_list[i].y, c_list[i+1].x,c_list[i+1].y, color_list[j])
+sol_1.plot_sol(eng)
+
 eng.saveas(fig,'plot.fig',nargout=0)
 
 
