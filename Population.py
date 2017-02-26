@@ -57,14 +57,21 @@ def NPGA_Tournament(parents,offspring,i):
     #Scenario 2
     #Check with offspring Q
     if(len(offspring)>2):
-        get_niche_counts(p_1,p_2)
+        nc_1, nc_2 = get_niche_counts(p_1,p_2,offspring)
+        if (nc_1 < nc_2):
+            return p_1
+        else:
+            return p_2
+    else:
+        return random.choice([p_1,p_2])
 
 
 def get_niche_counts(p_1,p_2,offspring):
-    nc_1 = 0
+    nc_1,nc_2 = 0,0
     pool = offspring + [p_1,p_2]
     print pool
     pool.sort(key=lambda x: x.fitness())
+
     #Cange to hamming distance?
     f_min = pool[0].fitness()
     f_max = pool[-1].fitness()
@@ -83,6 +90,9 @@ def get_niche_counts(p_1,p_2,offspring):
         if (distance_2 < sigma_share):
             sh_2 = 1 - (distance_2 / sigma_share)
 
+        nc_1 += sh_1
+        nc_2 += sh_2
 
+    return nc_1,nc_2
 
 
