@@ -33,7 +33,15 @@ class Solution: #should be called Solution
         for depot in self.depots:
             depot.init_route()
 
-    def fitness_and_duration(self):
+        self.duration,self.vehicles = self.duration_and_vehicles()
+
+    def fitness(self):
+        alpha = 100
+        beta = 0.001
+        fitness = alpha*self.vehicles + beta*self.duration
+        return fitness
+
+    def duration_and_vehicles(self):
 
         vehicles = 0
         total_distance = 0
@@ -52,14 +60,8 @@ class Solution: #should be called Solution
                     route_distance += distance(route[route_len-1], depot)
                     total_distance += route_distance
 
-        if(customer_duration >0):
-            print  "Customers got demands!"
+        return total_distance+customer_duration,vehicles
 
-        alpha = 100
-        beta = 0.001
-        fitness = alpha*vehicles + beta*total_distance
-        duration = total_distance + customer_duration
-        return (fitness, duration)
 
     def plot_sol(self,eng):
         for depot in self.depots:
