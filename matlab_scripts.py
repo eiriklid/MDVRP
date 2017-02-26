@@ -3,11 +3,12 @@ import matlab.engine
 COLORS = ['b','r','g','c','m','y','k']
 
 
-def make_fig(eng):
+def make_fig(eng,fitness):
     fig = eng.figure()
     eng.hold("on", nargout=0)
     eng.box("on", nargout=0)
     eng.grid("on", nargout=0)
+    eng.title('Fitness: ' + str(fitness), nargout=0)
     return fig
 
 def plot_depot(eng,depots):
@@ -28,9 +29,9 @@ def plot_routes(eng,depot):
         if route == []:
             print "Empty Route for veh:",vehicle
         draw_line(eng,depot.x,depot.y,route[0].x,route[0].y,COLORS[vehicle-1])
-        route_length = len(route)
-        if(route_length >1):
-            for i in range(route_length-1):
+        route_len = len(route)
+        if(route_len >1):
+            for i in range(route_len-1):
                 draw_line(eng,route[i].x,route[i].y, route[i+1].x,route[i+1].y, COLORS[vehicle-1])
-        draw_line(eng,route[route_length-1].x,route[route_length-1].y,depot.x,depot.y,COLORS[vehicle-1])
+        draw_line(eng,route[route_len-1].x,route[route_len-1].y,depot.x,depot.y,COLORS[vehicle-1])
 

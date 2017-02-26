@@ -1,8 +1,9 @@
 import matlab.engine
-eng = matlab.engine.start_matlab("-desktop")
+eng = matlab.engine.start_matlab()
 
 import Customer
 import Depot
+import Population
 import Solution
 import matlab_scripts as mat
 
@@ -41,17 +42,21 @@ for i in range(t):
     Q = depots[i][1]
     depots[i]= Depot.Depot(x,y,D,Q,m)
 
+
+
+pop = Population.Population(customers,depots,m,10)
+pop.selection()
+
+
 sol_1 = Solution.Solution(customers, depots, m)
 
-
-
-fig = mat.make_fig(eng)
+_, fitness = sol_1.fitness_and_duration()
+fig = mat.make_fig(eng, fitness)
 
 mat.plot_depot(eng,depots)
 mat.plot_customers(eng,customers)
 
 sol_1.plot_sol(eng)
-
 eng.saveas(fig,'plot.fig',nargout=0)
 
 
