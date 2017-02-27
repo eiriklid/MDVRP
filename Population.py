@@ -5,12 +5,12 @@ import copy
 
 class Population:
 
-    def __init__(self,customers, depots, m, population_size):
+    def __init__(self,customers, depots, m,t, population_size):
         self.solutions = []
         self.N = population_size
         self.eng = None         #Matlab-engine for plot
         for i in range(self.N):
-            self.solutions.append(Solution.Solution(customers,depots,m))
+            self.solutions.append(Solution.Solution(customers,depots,m,t))
 
         self.sort_solutions()
 
@@ -41,7 +41,8 @@ class Population:
             p_2 = NPGA_Tournament(self.solutions,offspring,i)
 
             #Step 4, crossover p_1,p_2 = c_1,c_2 mutate c_1,c_2
-            self.crossover(p_1,p_2)
+            c_1,c_2 = self.crossover(p_1,p_2)
+
             #Step 5, add c_1,c_2 to offspring
 
             #Step 6
@@ -56,26 +57,36 @@ class Population:
     def crossover(self,p_1,p_2):
         c_1, c_2 = copy.deepcopy(p_1), copy.deepcopy(p_2)
 
+        #Find depot
         depot_c_1 = random.choice(c_1.depots)
-
         depot_c_2 = None
         for depot in c_2.depots:
             if(depot.x == depot_c_1.x ) and (depot.y == depot_c_1.y ):
                 depot_c_2 = depot
                 break
 
-
-
         if (depot_c_2 == None):
             print "Failed to find p_2s depot"
             return None,None
 
+        #make space for crossover
         vehicle_1 = random.choice(depot_c_1.vehicle_dict.keys())
         route_1 = depot_c_1.vehicle_dict[vehicle_1]
+
+        c_2.remove_customers(route_1)
 
         vehicle_2 = random.choice(depot_c_2.vehicle_dict.keys())
         route_2 = depot_c_2.vehicle_dict[vehicle_2]
 
+        c_1.remove_customers(route_2)
+
+        #insert crossover
+
+        c_1.insert_customers(route_2,depot_c_1)
+        c_2.insert_customers(route_1,depot_c_2)
+
+
+        return c_1,c_2
 
 def NPGA_Tournament(parents,offspring,i):
     sub_pop = random.sample(parents, 2)

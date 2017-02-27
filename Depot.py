@@ -23,13 +23,67 @@ class Depot:
                 print "Depot init failed"
                 self.vehicle_dict[vehicle] = [customer]
 
+    def get_insertion_costs(self,customer):
+        insertion_costs = []
+
+        for veh, route in self.vehicle_dict.items():
+                insertion_costs.append(self.insertion_cost(route,customer,veh))
+
+        return insertion_costs
+
+    def insertion_cost(self,route, customer,vehicle):
+        costs = []
+        feasible = True
+        if route != []:
+            if( (customer.q + self.route_load(route)) > self.Q):
+                feasible = False
+
+            costs = [0 for i in range(len(route)+1)]
+
+            #cost to insert at the beginning
+            costs[0] += distance(self,customer)
+            costs[0] += distance(customer, route[0])
+            costs[0] -= distance(self, route[0])
+
+            #cost to insert in the middle
+            for i in range(1,len(route)):
+                costs[i] += distance(route[i-1], customer)
+                costs[i] += distance(customer,route[i])
+                costs[i] -= distance(route[i-1], route[i])
+
+            #cost to insert at the end
+            costs[len(route)] += distance(route[len(route)-1],customer)
+            costs[len(route)] += distance(customer,self)
+            costs[len(route)] -= distance(route[len(route)-1], self)
+
+        margin = self.D - self.route_length(route)
+        for i,item in enumerate(costs):
+            if (margin < costs[i]):
+                print "to short", margin, costs[i]
+                costs[i] = (item, i, vehicle, False)
+            else:
+                costs[i] = (item,i,vehicle,feasible)
+
+        return costs
+
+    def route_load(self,route):
+        load = 0
+        for stop in route:
+            load += stop.q
+
+        return load
+
+    def route_length(self,route):
+        dist = 0
+        for i in range(1, len(route)):
+            dist += distance(route[i - 1], route[i])
+            dist += route[i].d
+
+        return dist
 
 
-
-
-
-
-
+def distance(c_1, c_2):
+    return ((c_1.x - c_2.x) ** 2 + (c_1.y - c_2.y) ** 2) ** 0.5
 
 
 

@@ -5,19 +5,25 @@ import copy
 
 class Solution: #should be called Solution
 
-    def __init__(self,customers,depots,m):
+    def __init__(self,customers,depots,m,t):
         #check if hard/shallow copy
         self.customers = copy.deepcopy(customers)
         self.depots = copy.deepcopy(depots)
         # set a feasible grouping of customers
         while True:
             feasible = True
-            customer_depot_group = [random.randrange(len(self.depots)) for i in range(len(self.customers))]
+
+
             # Set vehicle accordingly, each customer has a depot. Should also have a vehicle.
+            for customer in self.customers:
+                dist = []
+                for depot in self.depots:
+                    dist.append( (distance(depot,customer),depot) )
+                dist.sort()
+                dist[0][1].customer_list.append(customer)
 
             for i, depot in enumerate(self.depots):
-                depot.customer_list = [self.customers[j] for j in range(len(customer_depot_group)) if
-                                       customer_depot_group[j] == i]
+
                 demand = [c.q for c in depot.customer_list]
 
                 if (sum(demand) > m * depot.Q):
@@ -44,31 +50,36 @@ class Solution: #should be called Solution
     def duration_and_vehicles(self):
 
         vehicles = 0
-        total_distance = 0
-        customer_duration = 0
+        duration = 0
         for depot in self.depots:
             for vehicle_num, route in depot.vehicle_dict.items():
                 if route != []:
-                    vehicles = vehicles +1
+                    vehicles += 1
+                    duration += depot.route_length(route)
 
-                    route_len = len(route)
-                    route_distance = distance(depot,route[0])
-                    if (route_len > 1):
-                        for i in range(route_len - 1):
-                            route_distance += distance( route[i], route[i+1])
-                            customer_duration += route[i].d
-                    route_distance += distance(route[route_len-1], depot)
-                    total_distance += route_distance
-
-        return total_distance+customer_duration,vehicles
+        return duration,vehicles
 
     def remove_customers(self,customers):
-        for veh,route in self.depots.items():
-            for customer in customers:
+        for depot in self.depots:
+            for veh,route in depot.vehicle_dict.items():
                 for stop in route:
-                    if customer.x == stop.x and customer.y == stop.y:
-                        route.remove(stop)
-                        break
+                    for customer in customers:
+                        if customer.x == stop.x and customer.y == stop.y:
+                            route.remove(stop)
+                            break
+
+    def insert_customers(self,customers,depot):
+        if depot in self.depots:
+            for customer in customers:
+                cost = depot.get_insertion_costs(customer)
+
+                cost.sort()
+
+                k = random.random()
+                print k, cost
+
+        else:
+            print "Oh shit!"
 
     def plot_sol(self,eng):
         for depot in self.depots:

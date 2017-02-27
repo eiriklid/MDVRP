@@ -5,7 +5,7 @@ class Customer():
         self.i = i
         self.x = x
         self.y = y
-        self.d = d
-        self.q = q
+        self.d = d # necessary service duration required for this customer (0 = no such hard requirement)
+        self.q = q # demand for this customer, load
 
 

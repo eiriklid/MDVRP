@@ -28,8 +28,10 @@ def draw_line(eng,x0,y0, x1,y1, color):
 
 def plot_routes(eng,depot):
     for vehicle,route in depot.vehicle_dict.items():
+        print vehicle, route
         if route == []:
             print "Empty Route for veh:",vehicle
+            continue
         draw_line(eng,depot.x,depot.y,route[0].x,route[0].y,COLORS[vehicle-1])
         route_len = len(route)
         if(route_len >1):
