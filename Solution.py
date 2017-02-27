@@ -62,6 +62,13 @@ class Solution: #should be called Solution
 
         return total_distance+customer_duration,vehicles
 
+    def remove_customers(self,customers):
+        for veh,route in self.depots.items():
+            for customer in customers:
+                for stop in route:
+                    if customer.x == stop.x and customer.y == stop.y:
+                        route.remove(stop)
+                        break
 
     def plot_sol(self,eng):
         for depot in self.depots:

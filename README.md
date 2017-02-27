@@ -9,5 +9,7 @@ TO-DO:
 - Tournament selection
 - Crossover
 - Mutation 
+- Acceptance test
+- Elitism
 - Change input values to float?
 - Hamming distance for nicing?

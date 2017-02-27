@@ -9,6 +9,9 @@ class Depot:
         self.m = m  #maximum number of vehicles available in each depot
         self.customer_list = [] #dict for vehicle instead/as well?
         self.vehicle_dict = {}
+        for i in range(self.m):
+            self.vehicle_dict[i+1] = []
+
 
     def init_route(self):
 
@@ -17,7 +20,14 @@ class Depot:
             if vehicle in self.vehicle_dict:
                 self.vehicle_dict[vehicle].append(customer)
             else:
+                print "Depot init failed"
                 self.vehicle_dict[vehicle] = [customer]
+
+
+
+
+
+
 
 
 
