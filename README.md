@@ -7,5 +7,7 @@ TO-DO:
 - Cluster at init?
 - Evo
 - Tournament selection
+- Crossover
+- Mutation 
 - Change input values to float?
 - Hamming distance for nicing?

@@ -3,13 +3,15 @@ import matlab.engine
 COLORS = ['b','r','g','c','m','y','k']
 
 
-def make_fig(eng,fitness):
+def make_fig(eng):
     fig = eng.figure()
     eng.hold("on", nargout=0)
     eng.box("on", nargout=0)
     eng.grid("on", nargout=0)
-    eng.title('Fitness: ' + str(fitness), nargout=0)
     return fig
+
+def title_fitness(eng,fitness):
+    eng.title('Fitness: ' + str(fitness), nargout=0)
 
 def plot_depot(eng,depots):
     for depot in depots:

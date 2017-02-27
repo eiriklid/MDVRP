@@ -47,15 +47,13 @@ for i in range(t):
 pop = Population.Population(customers,depots,m,10)
 pop.selection()
 
+
 '''
-sol_1 = Solution.Solution(customers, depots, m)
-_, fitness = sol_1.fitness_and_duration()
-fig = mat.make_fig(eng, fitness)
+fig = mat.make_fig(eng)
 
 mat.plot_depot(eng,depots)
 mat.plot_customers(eng,customers)
 
-sol_1.plot_sol(eng)
 eng.saveas(fig,'plot.fig',nargout=0)
 '''
 

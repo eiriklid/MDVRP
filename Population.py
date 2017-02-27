@@ -7,63 +7,87 @@ class Population:
     def __init__(self,customers, depots, m, population_size):
 
         self.solutions = []
-
-        for i in range(population_size):
+        self.N = population_size
+        self.eng = None         #Matlab-engine for plot
+        for i in range(self.N):
             self.solutions.append(Solution.Solution(customers,depots,m))
 
         self.sort_solutions()
 
         self.best_solution = self.solutions[0]
 
+    def set_eng(self,eng):
+        self.eng = eng
+
     def sort_solutions(self):
         self.solutions.sort(key=lambda x: x.duration)
 
 
     def selection(self):
+        #Step 1
         random.shuffle(self.solutions)
 
+        for sol in self.solutions:
+            print sol.fitness()
 
         offspring = []
         i = 0
-        while(True):
+        while(i<self.N):
+            #Step 2
             p_1 = NPGA_Tournament(self.solutions,offspring,i)
+
+            #Step 3
             i += 2
             p_2 = NPGA_Tournament(self.solutions,offspring,i)
 
+            #Step 4, crossover p_1,p_2 = c_1,c_2 mutate c_1,c_2
 
+            #Step 5, add c_1,c_2 to offspring
+
+            #Step 6
+            i +=1
+            if(len(offspring)==self.N/2):
+                print "Shuffling!!!!!!!"
+                random.shuffle(self.solutions)
+                i=0
+            else:
+                print len(offspring), self.N/2
 
 
 def NPGA_Tournament(parents,offspring,i):
     sub_pop = random.sample(parents, 2)
-    p_1,p_2 = parents[i],parents[i+1]
+    print parents
+    sol_1,sol_2 = parents[i],parents[i+1]
+    print sol_1,sol_2
+    print sub_pop
     winner_1 = True
     winner_2 = True
 
     for sub_sol in sub_pop:
-        if((sub_sol.duration< p_1.duration) or (sub_sol.vehicles< p_1.vehicles)):
+        if((sub_sol.duration< sol_1.duration) or (sub_sol.vehicles< sol_1.vehicles)):
             winner_1 = False
 
-        if ((sub_sol.duration < p_2.duration) or (sub_sol.vehicles < p_2.vehicles)):
+        if ((sub_sol.duration < sol_2.duration) or (sub_sol.vehicles < sol_2.vehicles)):
             winner_2 = False
 
     #Scenario 1
     if(winner_1):
         if not (winner_2):
-            return p_1
+            return sol_1
 
     elif(winner_2):
         if not (winner_1):
-            return p_2
+            return sol_2
     #Scenario 2
     #Check with offspring Q
     if(len(offspring)>2):
-        nc_1, nc_2 = get_niche_counts(p_1,p_2,offspring)
+        nc_1, nc_2 = get_niche_counts(sol_1,sol_2,offspring)
         if (nc_1 < nc_2):
-            return p_1
+            return sol_1
         else:
-            return p_2
+            return sol_2
     else:
-        return random.choice([p_1,p_2])
+        return random.choice([sol_1,sol_2])
 
 
 def get_niche_counts(p_1,p_2,offspring):
