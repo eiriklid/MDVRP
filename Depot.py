@@ -27,7 +27,7 @@ class Depot:
         insertion_costs = []
 
         for veh, route in self.vehicle_dict.items():
-                insertion_costs.append(self.insertion_cost(route,customer,veh))
+                insertion_costs= insertion_costs + self.insertion_cost(route,customer,veh)
 
         return insertion_costs
 
@@ -56,15 +56,22 @@ class Depot:
             costs[len(route)] += distance(customer,self)
             costs[len(route)] -= distance(route[len(route)-1], self)
 
-        margin = self.D - self.route_length(route)
-        for i,item in enumerate(costs):
-            if (margin < costs[i]):
-                print "to short", margin, costs[i]
-                costs[i] = (item, i, vehicle, False)
-            else:
+        if(self.D != 0):
+            margin = self.D - self.route_length(route)
+            for i, item in enumerate(costs):
+                if (margin < costs[i]):
+                    print "To short", margin, costs[i]
+                    costs[i] = (item, i, vehicle, False)
+                else:
+                    costs[i] = (item, i, vehicle, feasible)
+        else:
+            for i, item in enumerate(costs):
                 costs[i] = (item,i,vehicle,feasible)
 
         return costs
+
+    def insert_in_route(self,customer,vehicle,i):
+        self.vehicle_dict[vehicle].insert(i,customer)
 
     def route_load(self,route):
         load = 0

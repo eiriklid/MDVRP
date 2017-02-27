@@ -4,9 +4,10 @@ Using MATLAB Engine API for plotting
 
 TO-DO:
 
+- Routing init, check for duration constraint
 - Evo
-- Tournament selection
-- Crossover
+- Tournament selection, probabilistic selection with r
+
 - Mutation 
 - Acceptance test
 - Elitism

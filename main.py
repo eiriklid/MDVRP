@@ -1,5 +1,5 @@
 import matlab.engine
-eng = matlab.engine.start_matlab()
+#eng = matlab.engine.start_matlab()
 
 import Customer
 import Depot
@@ -44,16 +44,19 @@ for i in range(t):
 
 
 
-#pop = Population.Population(customers,depots,m,t,10)
-#pop.selection()
-sol = Solution.Solution(customers,depots,m,t)
 
+pop = Population.Population(customers,depots,m,t,1200)
 
+for gen in range(50):
+    pop.selection()
+#sol = Solution.Solution(customers,depots,m,t)
+
+'''
 fig = mat.make_fig(eng)
 
 mat.plot_depot(eng,depots)
 mat.plot_customers(eng,customers)
 
-sol.plot_sol(eng)
+#sol.plot_sol(eng)
 eng.saveas(fig,'plot.fig',nargout=0)
-
+'''

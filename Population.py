@@ -15,6 +15,7 @@ class Population:
         self.sort_solutions()
 
         self.best_solution = self.solutions[0]
+        self.best_duration = self.best_solution.duration_and_vehicles()
 
     def set_eng(self,eng):
         self.eng = eng
@@ -27,12 +28,11 @@ class Population:
         #Step 1
         random.shuffle(self.solutions)
 
-        for sol in self.solutions:
-            print sol.fitness()
 
         offspring = []
         i = 0
-        while(i<self.N):
+        while (True):
+            #print "i",i
             #Step 2
             p_1 = NPGA_Tournament(self.solutions,offspring,i)
 
@@ -40,19 +40,46 @@ class Population:
             i += 2
             p_2 = NPGA_Tournament(self.solutions,offspring,i)
 
+
             #Step 4, crossover p_1,p_2 = c_1,c_2 mutate c_1,c_2
             c_1,c_2 = self.crossover(p_1,p_2)
 
+
             #Step 5, add c_1,c_2 to offspring
+            offspring.append(c_1)
+            offspring.append(c_2)
 
             #Step 6
             i +=1
-            if(len(offspring)==self.N/2):
-                print "Shuffling!!!!!!!"
-                random.shuffle(self.solutions)
-                i=0
-            else:
-                print len(offspring), self.N/2
+            if(i < self.N-1):
+
+                if(len(offspring)==self.N/2):
+                    #print "Shuffling!!!!!!!"
+                    random.shuffle(self.solutions)
+                    i=0
+
+            if(len(offspring)==self.N):
+                #print "BREAK!"
+                break
+
+        #for child in offspring:
+        #   print child.duration_and_vehicles()
+
+        self.solutions.extend(offspring)
+
+        self.sort_solutions()
+
+        pop_best_dur,veh = self.solutions[0].duration_and_vehicles()
+
+        if(pop_best_dur< self.best_duration):
+            print "Best:", pop_best_dur
+            self.best_solution = self.solutions[0]
+            self.best_duration = pop_best_dur
+
+        self.solutions = self.solutions[:self.N]
+
+
+
 
     def crossover(self,p_1,p_2):
         c_1, c_2 = copy.deepcopy(p_1), copy.deepcopy(p_2)
@@ -75,23 +102,27 @@ class Population:
 
         c_2.remove_customers(route_1)
 
+
         vehicle_2 = random.choice(depot_c_2.vehicle_dict.keys())
         route_2 = depot_c_2.vehicle_dict[vehicle_2]
 
         c_1.remove_customers(route_2)
 
         #insert crossover
-
         c_1.insert_customers(route_2,depot_c_1)
         c_2.insert_customers(route_1,depot_c_2)
-
 
         return c_1,c_2
 
 def NPGA_Tournament(parents,offspring,i):
     sub_pop = random.sample(parents, 2)
+    #print "i",i,"par_len",len(parents)
+
     #print parents
-    sol_1,sol_2 = parents[i],parents[i+1]
+    try:
+        sol_1,sol_2 = parents[i],parents[i+1]
+    except IndexError:
+        print "wrong in NPGA Tournament",i
     #print sol_1,sol_2
     #print sub_pop
     winner_1 = True
@@ -127,7 +158,6 @@ def NPGA_Tournament(parents,offspring,i):
 def get_niche_counts(p_1,p_2,offspring):
     nc_1,nc_2 = 0,0
     pool = offspring + [p_1,p_2]
-    print pool
     pool.sort(key=lambda x: x.fitness())
 
     #Cange to hamming distance?
@@ -137,9 +167,11 @@ def get_niche_counts(p_1,p_2,offspring):
     f_2 = p_2.fitness()
     sigma_share = 0.5
     for child in pool:
-        distance_1 = math.sqrt( ((f_1-child.fitness()) / (f_max-f_min))**2 ) #May need to change this
-        distance_2 = math.sqrt( ((f_2-child.fitness()) / (f_max-f_min))**2 ) #May need to change this
-
+        try:
+            distance_1 = math.sqrt( ((f_1-child.fitness()) / (f_max-f_min))**2 ) #May need to change this
+            distance_2 = math.sqrt( ((f_2-child.fitness()) / (f_max-f_min))**2 ) #May need to change this
+        except ZeroDivisionError:
+            print "Zero-div",len(pool), f_min, f_max
         sh_1, sh_2= 0,0
 
         if(distance_1< sigma_share ):

@@ -56,6 +56,9 @@ class Solution: #should be called Solution
                 if route != []:
                     vehicles += 1
                     duration += depot.route_length(route)
+                    duration += distance(depot,route[0]) #distance from depot to first customer
+                    duration += distance(depot,route[-1]) #distance from depot to last customer
+
 
         return duration,vehicles
 
@@ -76,7 +79,19 @@ class Solution: #should be called Solution
                 cost.sort()
 
                 k = random.random()
-                print k, cost
+
+                if(k <=0.8):
+                    for placement in cost:
+                        #placement is a tuple with cost,index,vehicle and feasibility
+                        if(placement[3]):
+                            depot.insert_in_route(customer,placement[2],placement[1])
+                            break
+                else:
+                    depot.insert_in_route(customer, cost[0][2], cost[0][1])
+
+
+
+
 
         else:
             print "Oh shit!"
