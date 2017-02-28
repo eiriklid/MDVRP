@@ -45,7 +45,7 @@ for i in range(t):
 
 
 
-pop = Population.Population(customers,depots,m,t,1200)
+pop = Population.Population(customers,depots,m,t,40)
 
 for gen in range(50):
     pop.selection()

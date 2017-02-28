@@ -60,7 +60,7 @@ class Depot:
             margin = self.D - self.route_length(route)
             for i, item in enumerate(costs):
                 if (margin < costs[i]):
-                    print "To short", margin, costs[i]
+                    #print "To long route", margin, costs[i]
                     costs[i] = (item, i, vehicle, False)
                 else:
                     costs[i] = (item, i, vehicle, feasible)

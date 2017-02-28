@@ -163,6 +163,10 @@ def get_niche_counts(p_1,p_2,offspring):
     #Cange to hamming distance?
     f_min = pool[0].fitness()
     f_max = pool[-1].fitness()
+
+    if (f_min == f_max):
+        print "Noooo!"
+
     f_1 = p_1.fitness()
     f_2 = p_2.fitness()
     sigma_share = 0.5
@@ -171,7 +175,11 @@ def get_niche_counts(p_1,p_2,offspring):
             distance_1 = math.sqrt( ((f_1-child.fitness()) / (f_max-f_min))**2 ) #May need to change this
             distance_2 = math.sqrt( ((f_2-child.fitness()) / (f_max-f_min))**2 ) #May need to change this
         except ZeroDivisionError:
-            print "Zero-div",len(pool), f_min, f_max
+            #all elements in pool have same fitness
+            print "Zero-div",len(pool),pool[0].fitness(),pool[-1].fitness(), pool[0].duration_and_vehicles(),pool[-1].duration_and_vehicles(), p_1.duration_and_vehicles()
+            distance_1 = 0
+            distance_2 = 0
+
         sh_1, sh_2= 0,0
 
         if(distance_1< sigma_share ):
@@ -182,6 +190,7 @@ def get_niche_counts(p_1,p_2,offspring):
 
         nc_1 += sh_1
         nc_2 += sh_2
+
 
     return nc_1,nc_2
 

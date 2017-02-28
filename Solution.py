@@ -42,9 +42,9 @@ class Solution: #should be called Solution
         self.duration,self.vehicles = self.duration_and_vehicles()
 
     def fitness(self):
-        alpha = 100
-        beta = 0.001
-        fitness = alpha*self.vehicles + beta*self.duration
+        alpha = 100000
+        beta = 1
+        fitness = alpha*float(self.vehicles) + beta*self.duration
         return fitness
 
     def duration_and_vehicles(self):
