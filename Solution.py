@@ -39,10 +39,9 @@ class Solution: #should be called Solution
         for depot in self.depots:
             depot.init_route()
 
-        self.duration,self.vehicles = self.duration_and_vehicles()
-
+        self.update_duration_and_vehicle()
     def fitness(self):
-        self.duration, self.vehicles = self.duration_and_vehicles()
+        self.update_duration_and_vehicle()
         alpha = 100000
         beta = 1
         fitness = alpha*float(self.vehicles) + beta*self.duration
@@ -60,6 +59,9 @@ class Solution: #should be called Solution
 
 
         return duration,vehicles
+
+    def update_duration_and_vehicle(self):
+        self.duration, self.vehicles = self.duration_and_vehicles()
 
     def remove_customers(self,customers):
         for depot in self.depots:
@@ -103,6 +105,12 @@ class Solution: #should be called Solution
         for i,depot in enumerate(self.depots):
             print "Depot:",i
             matlab_scripts.plot_routes(eng,depot)
+
+    def make_file(self,name):
+        self.update_duration_and_vehicle()
+        f = open(name,'w')
+        f.write(self.duration)
+
 
 
 

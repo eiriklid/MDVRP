@@ -44,9 +44,11 @@ for i in range(t):
 
 
 
-pop = Population.Population(customers,depots,m,t,100)
+pop = Population.Population(customers,depots,m,t,60)
 
-for gen in range(50):
+for gen in range(250):
+    if(gen%50 == 0):
+        print gen
     pop.selection()
 
 best_sol =pop.best_solution

@@ -86,6 +86,17 @@ class Depot:
             self.vehicle_dict[len(self.vehicle_dict)+1]= [customer]
             #print self.vehicle_dict.keys()
 
+    def clean(self):
+        empty_routes = 0
+        for vehicle, route in self.vehicle_dict.items()
+            if route == []:
+                print "Vehicle",vehicle,"is empty"
+                empty_routes+=1
+                for i in range(vehicle,len(self.vehicle_dict)):
+                    self.vehicle_dict[i] = self.vehicle_dict[i+1]
+
+        for i in range(empty_routes):
+            del self.vehicle_dict[len(self.vehicle_dict)]
 
     def route_load(self,route):
         load = 0
