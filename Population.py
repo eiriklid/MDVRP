@@ -176,7 +176,8 @@ def get_niche_counts(p_1,p_2,offspring):
             distance_2 = math.sqrt( ((f_2-child.fitness()) / (f_max-f_min))**2 ) #May need to change this
         except ZeroDivisionError:
             #all elements in pool have same fitness
-            print "Zero-div",len(pool),pool[0].fitness(),pool[-1].fitness(), pool[0].duration_and_vehicles(),pool[-1].duration_and_vehicles(), p_1.duration_and_vehicles()
+            print "Zero-div",len(pool),pool[0].fitness(),pool[-1].fitness()
+            print pool[0].duration_and_vehicles(),pool[-1].duration_and_vehicles(), p_1.duration_and_vehicles()
             distance_1 = 0
             distance_2 = 0
 
