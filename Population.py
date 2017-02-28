@@ -79,8 +79,6 @@ class Population:
         self.solutions = self.solutions[:self.N]
 
 
-
-
     def crossover(self,p_1,p_2):
         c_1, c_2 = copy.deepcopy(p_1), copy.deepcopy(p_2)
 

@@ -73,6 +73,20 @@ class Depot:
     def insert_in_route(self,customer,vehicle,i):
         self.vehicle_dict[vehicle].insert(i,customer)
 
+    def make_new_route(self,customer):
+        placed = False
+        for vehicle, route in self.vehicle_dict.items():
+            if route ==[]:
+                self.insert_in_route(customer,vehicle,0)
+                placed = True
+                break
+
+        if not placed:
+            #print "Add new car"
+            self.vehicle_dict[len(self.vehicle_dict)+1]= [customer]
+            #print self.vehicle_dict.keys()
+
+
     def route_load(self,route):
         load = 0
         for stop in route:
@@ -81,10 +95,14 @@ class Depot:
         return load
 
     def route_length(self,route):
-        dist = 0
-        for i in range(1, len(route)):
-            dist += distance(route[i - 1], route[i])
-            dist += route[i].d
+        if route != []:
+            dist = distance(self,route[0])
+            for i in range(1, len(route)):
+                dist += distance(route[i - 1], route[i])
+                dist += route[i].d
+            dist += distance(self,route[-1])
+        else:
+            return 0
 
         return dist
 
