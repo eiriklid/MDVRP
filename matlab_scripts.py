@@ -30,7 +30,7 @@ def plot_routes(eng,depot):
     for vehicle,route in depot.vehicle_dict.items():
         #print vehicle, route
         if route == []:
-            print "Empty Route for veh:",vehicle
+            #print "Empty Route for veh:",vehicle
             continue
         draw_line(eng,depot.x,depot.y,route[0].x,route[0].y,COLORS[vehicle-1])
         route_len = len(route)
@@ -39,3 +39,7 @@ def plot_routes(eng,depot):
                 draw_line(eng,route[i].x,route[i].y, route[i+1].x,route[i+1].y, COLORS[vehicle-1])
         draw_line(eng,route[route_len-1].x,route[route_len-1].y,depot.x,depot.y,COLORS[vehicle-1])
 
+def plot_file(eng,file,customers,depots):
+    plot_depot(eng,depots)
+    plot_customers(eng,customers)
+    #Set fitness

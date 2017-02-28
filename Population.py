@@ -68,13 +68,17 @@ class Population:
         self.solutions = self.solutions +offspring
 
         self.sort_solutions()
+        for sol in self.solutions:
+            if(sol.infeasible_count()==0):
+                pop_best_dur,veh = sol.duration_and_vehicles()
 
-        pop_best_dur,veh = self.solutions[0].duration_and_vehicles()
+                if(pop_best_dur< self.best_duration):
+                    print "Best:", pop_best_dur
+                    self.best_solution = sol
+                    self.best_duration = pop_best_dur
+                break
 
-        if(pop_best_dur< self.best_duration):
-            print "Best:", pop_best_dur
-            self.best_solution = self.solutions[0]
-            self.best_duration = pop_best_dur
+
 
         self.solutions = self.solutions[:self.N]
 

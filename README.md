@@ -3,12 +3,13 @@
 Using MATLAB Engine API for plotting
 
 TO-DO:
-- Make output file
 
-- Tournament selection, probabilistic selection with r
 - Mutation 
-- Acceptance test, check that solution is feasible 
+- (Acceptance test, check that solution is feasible)
+ 
 - Elitism
+- Tournament selection, probabilistic selection with r
+
 
 - Change input values to float?
-- Hamming distance for nicing?
+- Hamming distance for niching?

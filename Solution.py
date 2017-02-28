@@ -42,9 +42,9 @@ class Solution: #should be called Solution
         self.update_duration_and_vehicle()
     def fitness(self):
         self.update_duration_and_vehicle()
-        alpha = 100000
+        alpha = 10000
         beta = 1
-        fitness = alpha*float(self.vehicles) + beta*self.duration
+        fitness = alpha*float(self.vehicles) + beta*self.duration + 100*float(self.infeasible_count())
         return fitness
 
     def duration_and_vehicles(self):
@@ -98,18 +98,30 @@ class Solution: #should be called Solution
         else:
             print "Oh shit!"
 
-    def feasible(self):
-        print "feasible?"
+    def infeasible_count(self):
+        infeasibles = 0
+        for depot in self.depots:
+            infeasibles += len(depot.infeasible_routes())
+
+        return infeasibles
 
     def plot_sol(self,eng):
         for i,depot in enumerate(self.depots):
-            print "Depot:",i
+            #print "Depot:",i
             matlab_scripts.plot_routes(eng,depot)
 
     def make_file(self,name):
         self.update_duration_and_vehicle()
         f = open(name,'w')
-        f.write(self.duration)
+        f.write("{0:.2f}".format(self.duration)+ '\n')
+        for j,depot in enumerate(self.depots):
+            for veh, route in depot.vehicle_dict.items():
+                customers = [0]
+                for customer in route:
+                    customers.append(customer.i)
+                customers.append(0)
+                c_str = '\t'.join([str(x) for x in customers])
+                f.write(str(j+1)+"\t"+str(veh)+ "\t{0:.2f}\t".format(depot.route_length(route)) + str(depot.route_load(route))+'\t '+ c_str+ '\n')
 
 
 

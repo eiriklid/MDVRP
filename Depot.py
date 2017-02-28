@@ -88,9 +88,9 @@ class Depot:
 
     def clean(self):
         empty_routes = 0
-        for vehicle, route in self.vehicle_dict.items()
+        for vehicle, route in self.vehicle_dict.items():
             if route == []:
-                print "Vehicle",vehicle,"is empty"
+                #print "Vehicle",vehicle,"is empty"
                 empty_routes+=1
                 for i in range(vehicle,len(self.vehicle_dict)):
                     self.vehicle_dict[i] = self.vehicle_dict[i+1]
@@ -117,6 +117,15 @@ class Depot:
 
         return dist
 
+    def infeasible_routes(self):
+        infeasibles = []
+        for veh,route in self.vehicle_dict.items():
+            if(self.route_load(route) > self.Q):
+                infeasibles.append(veh)
+            elif(self.D !=0):
+                if(self.route_length(route)> self.D):
+                    infeasibles.append(veh)
+        return infeasibles
 
 def distance(c_1, c_2):
     return ((c_1.x - c_2.x) ** 2 + (c_1.y - c_2.y) ** 2) ** 0.5

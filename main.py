@@ -44,7 +44,7 @@ for i in range(t):
 
 
 
-pop = Population.Population(customers,depots,m,t,60)
+pop = Population.Population(customers,depots,m,t,40)
 
 for gen in range(250):
     if(gen%50 == 0):
@@ -61,15 +61,17 @@ mat.plot_depot(eng,depots)
 mat.plot_customers(eng,customers)
 
 dur,_ = best_sol.duration_and_vehicles()
-eng.title("Fitness:"+str(dur))
 
+mat.title_fitness(eng,dur)
 best_sol.plot_sol(eng)
 
-'''
+
 for i,depot in enumerate(best_sol.depots):
-    print depot.x,depot.y
-    for veh,route in depot.vehicle_dict.items():
-        print i,veh, depot.route_length(route)
-'''
+    depot.clean()
+    #print depot.x,depot.y
+    #for veh,route in depot.vehicle_dict.items():
+        #print i,veh, depot.route_length(route)
+
+best_sol.make_file('test1.txt')
 
 eng.saveas(fig,'plot.fig',nargout=0)
