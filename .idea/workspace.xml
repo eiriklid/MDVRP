@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f647d84-2478-4aff-a080-5446f28eb4e0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plot.fig" afterPath="$PROJECT_DIR$/plot.fig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Depot.py" afterPath="$PROJECT_DIR$/Depot.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Population.py" afterPath="$PROJECT_DIR$/Population.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Solution.py" afterPath="$PROJECT_DIR$/Solution.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -552,7 +547,14 @@
       <option name="project" value="LOCAL" />
       <updated>1488273442806</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Made function to remove vehicles without route in depot">
+      <created>1488278128509</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1488278128510</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TodoView">
@@ -623,7 +625,8 @@
     <MESSAGE value="Need to make changes to niching, fitness-function not working" />
     <MESSAGE value="Forgot to update values in fitness-function" />
     <MESSAGE value="Fixed route-placement, if no feasible route" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed route-placement, if no feasible route" />
+    <MESSAGE value="Made function to remove vehicles without route in depot" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made function to remove vehicles without route in depot" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
