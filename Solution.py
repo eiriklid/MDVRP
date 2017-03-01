@@ -79,8 +79,6 @@ class Solution: #should be called Solution
                         if removed:
                             break
 
-
-
     def insert_customers(self,customers,depot):
         if depot in self.depots:
             for customer in customers:
@@ -109,14 +107,24 @@ class Solution: #should be called Solution
         else:
             print "Oh shit!"
 
-
     def infeasible_count(self):
         infeasibles = 0
-        customers = []
+
         for depot in self.depots:
             infeasibles += len(depot.infeasible_routes())
 
         return infeasibles
+
+    def mutate(self):
+        depot = random.choice(self.depots)
+
+        route = random.choice(depot.vehicle_dict.values())
+        start = random.randint(0,len(route))
+        stop = random.randint(start,len(route))
+        if(stop-start > 2):
+            inner = route[start:stop]
+            route[start:stop] = inner[::-1]
+
 
     def plot_sol(self,eng):
         for i,depot in enumerate(self.depots):

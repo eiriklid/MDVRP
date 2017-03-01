@@ -14,7 +14,6 @@ m = int(data[0])
 n = int(data[1])
 t = int(data[2])
 
-#TODO:Change inputs to int
 depots = []
 # get max duration(D) and max load per vehicle(Q) for each depot
 for i in range(t):
@@ -54,18 +53,12 @@ for depot in sol1.depots:
 
 pop = Population.Population(customers,depots,m,t,40)
 
-for gen in range(30):
+for gen in range(25):
     if(gen%5==0):
         print gen
     pop.selection()
 
 best_sol =pop.best_solution
-
-'''
-for depot in best_sol.depots:
-    for veh, route in depot.vehicle_dict.items():
-        print veh, route
-'''
 
 best_sol.make_file('test1.txt')
 
@@ -82,13 +75,5 @@ dur,_ = best_sol.duration_and_vehicles()
 mat.title_fitness(eng,dur)
 best_sol.plot_sol(eng)
 
-
-for i,depot in enumerate(best_sol.depots):
-    depot.clean()
-    #print depot.x,depot.y
-    #for veh,route in depot.vehicle_dict.items():
-        #print i,veh, depot.route_length(route)
-
-best_sol.make_file('test1.txt')
 
 eng.saveas(fig,'plot.fig',nargout=0)
