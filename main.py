@@ -19,7 +19,7 @@ depots = []
 # get max duration(D) and max load per vehicle(Q) for each depot
 for i in range(t):
     DQ = f.readline().split()
-    depots.append( (int(DQ[0]), int(DQ[1])) )
+    depots.append( (float(DQ[0]), float(DQ[1])) )
 
 
 customers = []
@@ -27,17 +27,17 @@ customers = []
 for j in range(n):
     info = f.readline().split()
     i = int(info[0])
-    x = int(info[1])
-    y = int(info[2])
-    d = int(info[3])
-    q = int(info[4])
+    x = float(info[1])
+    y = float(info[2])
+    d = float(info[3])
+    q = float(info[4])
     customers.append( Customer.Customer(i,x,y,d,q) )
 
 #get depot position(x,y), max duration(D), max load per vehicle(Q)
 for i in range(t):
     info = f.readline().split()
-    x = int(info[1])
-    y = int(info[2])
+    x = float(info[1])
+    y = float(info[2])
     D = depots[i][0]
     Q = depots[i][1]
     depots[i]= Depot.Depot(x,y,D,Q,m)
@@ -52,9 +52,9 @@ for depot in sol1.depots:
         print veh, route
 '''
 
-pop = Population.Population(customers,depots,m,t,60)
+pop = Population.Population(customers,depots,m,t,40)
 
-for gen in range(50):
+for gen in range(30):
     if(gen%5==0):
         print gen
     pop.selection()

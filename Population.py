@@ -28,6 +28,9 @@ class Population:
         #Step 1
         random.shuffle(self.solutions)
 
+        for sol in self.solutions:
+            for depot in sol.depots:
+                depot.clean()
 
         offspring = []
         i = 0
@@ -110,10 +113,12 @@ class Population:
             vehicle_2 = random.choice(depot_c_2.vehicle_dict.keys())
             route_2 = depot_c_2.vehicle_dict[vehicle_2]
 
+            c_1.remove_customers(route_2)
+            c_2.remove_customers(route_1)
 
             #insert crossover
-            c_1.move_customers(route_2,depot_c_1)
-            c_2.move_customers(route_1,depot_c_2)
+            c_1.insert_customers(route_2,depot_c_1)
+            c_2.insert_customers(route_1,depot_c_2)
 
         return c_1,c_2
 

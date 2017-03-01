@@ -65,7 +65,8 @@ class Solution: #should be called Solution
     def update_duration_and_vehicle(self):
         self.duration, self.vehicles = self.duration_and_vehicles()
 
-    def remove_customer(self,customer):
+    def remove_customers(self,customers):
+        for customer in customers:
             removed = False
             for depot in self.depots:
                 if not removed:
@@ -78,8 +79,6 @@ class Solution: #should be called Solution
                         if removed:
                             break
 
-            if not removed:
-                print "Not removed", customer
 
 
     def insert_customers(self,customers,depot):
@@ -103,14 +102,8 @@ class Solution: #should be called Solution
                         depot.make_new_route(customer)
 
                 else:
-                    try:
-                        depot.insert_in_route(customer, cost[0][2], cost[0][1])
-                    except IndexError:
-                        print
-                        print "cost-error:",cost, "depot",depot
-                        for error_depot in self.depots:
-                            for veh, route in error_depot.vehicle_dict.items():
-                                print veh, route
+                    depot.insert_in_route(customer, cost[0][2], cost[0][1])
+
 
 
         else:

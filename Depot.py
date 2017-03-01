@@ -29,8 +29,10 @@ class Depot:
         insertion_costs = []
 
         for veh, route in self.vehicle_dict.items():
-                insertion_costs= insertion_costs + self.insertion_cost(route,customer,veh)
-
+            route_cost =self.insertion_cost(route, customer, veh)
+            if route_cost == []:
+                print "Empty route", veh
+            insertion_costs= insertion_costs + route_cost
         return insertion_costs
 
     def insertion_cost(self,route, customer,vehicle):
@@ -57,6 +59,8 @@ class Depot:
             costs[len(route)] += distance(route[len(route)-1],customer)
             costs[len(route)] += distance(customer,self)
             costs[len(route)] -= distance(route[len(route)-1], self)
+        else:
+            costs = [2*distance(self,customer)]
 
         if(self.D != 0):
             margin = self.D - self.route_length(route)
@@ -73,7 +77,7 @@ class Depot:
         return costs
 
     def insert_in_route(self,customer,vehicle,i):
-        self.vehicle_dict[vehicle].insert(i,customer)
+        self.vehicle_dict[vehicle].insert(i, customer)
 
     def make_new_route(self,customer):
         placed = False
