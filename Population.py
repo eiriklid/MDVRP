@@ -101,20 +101,18 @@ class Population:
             return None,None
 
         #make space for crossover
-        vehicle_1 = random.choice(depot_c_1.vehicle_dict.keys())
-        route_1 = depot_c_1.vehicle_dict[vehicle_1]
+        if (depot_c_1.vehicle_dict.keys() != []) and (depot_c_2.vehicle_dict.keys() != []):
+            vehicle_1 = random.choice(depot_c_1.vehicle_dict.keys())
+            route_1 = depot_c_1.vehicle_dict[vehicle_1]
 
-        c_2.remove_customers(route_1)
+
+            vehicle_2 = random.choice(depot_c_2.vehicle_dict.keys())
+            route_2 = depot_c_2.vehicle_dict[vehicle_2]
 
 
-        vehicle_2 = random.choice(depot_c_2.vehicle_dict.keys())
-        route_2 = depot_c_2.vehicle_dict[vehicle_2]
-
-        c_1.remove_customers(route_2)
-
-        #insert crossover
-        c_1.insert_customers(route_2,depot_c_1)
-        c_2.insert_customers(route_1,depot_c_2)
+            #insert crossover
+            c_1.move_customers(route_2,depot_c_1)
+            c_2.move_customers(route_1,depot_c_2)
 
         return c_1,c_2
 

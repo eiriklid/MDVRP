@@ -12,6 +12,8 @@ class Depot:
         for i in range(self.m):
             self.vehicle_dict[i+1] = []
 
+    def __repr__(self):
+        return "<%s at %d>" % ("Depot:(" + str(self.x)+','+str(self.y), id(self))
 
     def init_route(self):
 

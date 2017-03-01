@@ -65,8 +65,7 @@ class Solution: #should be called Solution
     def update_duration_and_vehicle(self):
         self.duration, self.vehicles = self.duration_and_vehicles()
 
-    def remove_customers(self,customers):
-        for customer in customers:
+    def remove_customer(self,customer):
             removed = False
             for depot in self.depots:
                 if not removed:
@@ -80,9 +79,9 @@ class Solution: #should be called Solution
                             break
 
             if not removed:
-                print "Not removed", customer.i
+                print "Not removed", customer
 
-    def insert_customers(self,customers,depot):
+    def move_customers(self,customers,depot):
         if depot in self.depots:
             for customer in customers:
                 cost = depot.get_insertion_costs(customer)
@@ -97,19 +96,28 @@ class Solution: #should be called Solution
                         #placement is a tuple with cost,index,vehicle and feasibility
                         if(placement[3]):
                             placed = True
+                            self.remove_customer(customer)
                             depot.insert_in_route(customer,placement[2],placement[1])
                             break
                     if not placed:
+                        self.remove_customer(customer)
                         depot.make_new_route(customer)
 
                 else:
                     try:
+                        self.remove_customer(customer)
                         depot.insert_in_route(customer, cost[0][2], cost[0][1])
                     except IndexError:
-                        print "cost:", cost
+                        print
+                        print "cost-error:",cost, "depot",depot
+                        for error_depot in self.depots:
+                            for veh, route in error_depot.vehicle_dict.items():
+                                print veh, route
+
 
         else:
             print "Oh shit!"
+
 
     def infeasible_count(self):
         infeasibles = 0
