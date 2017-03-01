@@ -17,9 +17,11 @@ class Solution: #should be called Solution
             # Set vehicle accordingly, each customer has a depot. Should also have a vehicle.
             for customer in self.customers:
                 dist = []
+                #get distance to each depot
                 for depot in self.depots:
                     dist.append( (distance(depot,customer),depot) )
                 dist.sort()
+                #choose closest depot
                 dist[0][1].customer_list.append(customer)
 
             for i, depot in enumerate(self.depots):
@@ -64,13 +66,21 @@ class Solution: #should be called Solution
         self.duration, self.vehicles = self.duration_and_vehicles()
 
     def remove_customers(self,customers):
-        for depot in self.depots:
-            for veh,route in depot.vehicle_dict.items():
-                for stop in route:
-                    for customer in customers:
-                        if customer.x == stop.x and customer.y == stop.y:
-                            route.remove(stop)
+        for customer in customers:
+            removed = False
+            for depot in self.depots:
+                if not removed:
+                    for veh,route in depot.vehicle_dict.items():
+                        for stop in route:
+                            if customer.x == stop.x and customer.y == stop.y:
+                                route.remove(stop)
+                                removed = True
+                                break
+                        if removed:
                             break
+
+            if not removed:
+                print "Not removed", customer.i
 
     def insert_customers(self,customers,depot):
         if depot in self.depots:
@@ -93,7 +103,10 @@ class Solution: #should be called Solution
                         depot.make_new_route(customer)
 
                 else:
-                    depot.insert_in_route(customer, cost[0][2], cost[0][1])
+                    try:
+                        depot.insert_in_route(customer, cost[0][2], cost[0][1])
+                    except IndexError:
+                        print "cost:", cost
 
         else:
             print "Oh shit!"

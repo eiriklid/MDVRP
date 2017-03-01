@@ -69,6 +69,8 @@ class Population:
 
         self.sort_solutions()
         for sol in self.solutions:
+            for depot in sol.depots:
+                depot.clean()
             if(sol.infeasible_count()==0):
                 pop_best_dur,veh = sol.duration_and_vehicles()
 

@@ -5,7 +5,7 @@ import Depot
 import Population
 import Solution
 import matlab_scripts as mat
-
+import copy
 
 
 f = open('Data\Data Files\p01','r')
@@ -41,19 +41,30 @@ for i in range(t):
     Q = depots[i][1]
     depots[i]= Depot.Depot(x,y,D,Q,m)
 
+'''
+sol1 = Solution.Solution(customers,depots,m,t)
+sol2 = copy.deepcopy(sol1)
+sol2.remove_customers(sol1.customers)
 
+for depot in sol1.depots:
+    for veh, route in depot.vehicle_dict.items():
+        print veh, route
+'''
 
+pop = Population.Population(customers,depots,m,t,60)
 
-pop = Population.Population(customers,depots,m,t,40)
-
-for gen in range(250):
-    if(gen%50 == 0):
-        print gen
+for gen in range(50):
     pop.selection()
 
 best_sol =pop.best_solution
 
+for depot in best_sol.depots:
+    for veh, route in depot.vehicle_dict.items():
+        print veh, route
+best_sol.make_file('test1.txt')
 
+
+'''
 eng = matlab.engine.start_matlab()
 fig = mat.make_fig(eng)
 
@@ -73,5 +84,5 @@ for i,depot in enumerate(best_sol.depots):
         #print i,veh, depot.route_length(route)
 
 best_sol.make_file('test1.txt')
-
-eng.saveas(fig,'plot.fig',nargout=0)
+'''
+#eng.saveas(fig,'plot.fig',nargout=0)
