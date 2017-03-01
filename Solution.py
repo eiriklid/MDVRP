@@ -81,7 +81,8 @@ class Solution: #should be called Solution
             if not removed:
                 print "Not removed", customer
 
-    def move_customers(self,customers,depot):
+
+    def insert_customers(self,customers,depot):
         if depot in self.depots:
             for customer in customers:
                 cost = depot.get_insertion_costs(customer)
@@ -96,16 +97,13 @@ class Solution: #should be called Solution
                         #placement is a tuple with cost,index,vehicle and feasibility
                         if(placement[3]):
                             placed = True
-                            self.remove_customer(customer)
                             depot.insert_in_route(customer,placement[2],placement[1])
                             break
                     if not placed:
-                        self.remove_customer(customer)
                         depot.make_new_route(customer)
 
                 else:
                     try:
-                        self.remove_customer(customer)
                         depot.insert_in_route(customer, cost[0][2], cost[0][1])
                     except IndexError:
                         print
@@ -121,6 +119,7 @@ class Solution: #should be called Solution
 
     def infeasible_count(self):
         infeasibles = 0
+        customers = []
         for depot in self.depots:
             infeasibles += len(depot.infeasible_routes())
 

@@ -43,6 +43,7 @@ class Population:
 
             #Step 4, crossover p_1,p_2 = c_1,c_2 mutate c_1,c_2
             c_1,c_2 = self.crossover(p_1,p_2)
+            #TODO: Mutate c_1, c_2
 
 
             #Step 5, add c_1,c_2 to offspring
@@ -81,7 +82,7 @@ class Population:
                 break
 
 
-
+        #TODO: Change Elitism form
         self.solutions = self.solutions[:self.N]
 
 

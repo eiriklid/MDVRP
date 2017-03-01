@@ -14,6 +14,7 @@ m = int(data[0])
 n = int(data[1])
 t = int(data[2])
 
+#TODO:Change inputs to int
 depots = []
 # get max duration(D) and max load per vehicle(Q) for each depot
 for i in range(t):
